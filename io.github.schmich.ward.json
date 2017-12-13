@@ -1,9 +1,9 @@
 {
-  "name": "io.github.schmich",
+  "name": "io.github.schmich.ward",
   "description": "Ward",
-  "path": "/Users/schmich/dev/ward-extension/ward",
+  "path": "/Users/schmich/dev/ward-chrome-extension/ward",
   "type": "stdio",
   "allowed_origins": [
-    "chrome-extension://flbhodaodlhlcomomimaflmpgggfnjmb/"
+    "chrome-extension://eifmmnchcalgikfkmjhnabicjknoabnh/"
   ]
 }

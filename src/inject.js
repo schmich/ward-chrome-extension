@@ -1,4 +1,4 @@
-function getUserInput(passwordInput) {
+function findUsernameInput(passwordInput) {
   if (!passwordInput) {
     return null;
   }
@@ -20,46 +20,82 @@ function getUserInput(passwordInput) {
   return null;
 }
 
-let passwordInputs = document.querySelectorAll('input[type="password"]');
-for (let input of passwordInputs) {
+function attachPassword(input) {
   let button = document.createElement('img');
   button.classList.add('ward-autofill-button');
   button.src = chrome.runtime.getURL('asterisk.svg');
   button.title = 'Autofill with Ward';
+  button.style.display = 'none';
 
-  const positionImage = () => {
-    let rect = input.getBoundingClientRect();
-    let left = rect.left + window.scrollX;
-    let top = rect.top + window.scrollY;
+  let show = 0;
+  const showButton = () => {
+    if (++show > 0) {
+      let rect = input.getBoundingClientRect();
+      let left = rect.left + window.scrollX;
+      let top = rect.top + window.scrollY;
 
-    const padding = Math.floor(rect.height * 0.25);
-    let size = rect.height;
-    button.style.height = button.style.width = `${size}px`;
-    button.style.left = `${(left + rect.width - size)}px`;
-    button.style.padding = `${padding}px`;
-    button.style.top = `${top}px`;
+      const padding = Math.floor(rect.height * 0.25);
+      let size = rect.height;
+      button.style.height = button.style.width = `${size}px`;
+      button.style.left = `${(left + rect.width - size)}px`;
+      button.style.padding = `${padding}px`;
+      button.style.top = `${top}px`;
+      button.style.display = 'block';
+    }
   };
 
-  positionImage();
-  document.body.appendChild(button);
+  const hideButton = () => {
+    if (--show === 0) {
+      button.style.display = 'none';
+    }
+  };
 
-  const userInput = getUserInput(input);
-  button.onmouseover = () => {
+  input.addEventListener('mouseenter', () => showButton());
+  input.addEventListener('mouseleave', () => hideButton());
+
+  const usernameInput = findUsernameInput(input);
+
+  button.addEventListener('mouseenter', () => {
+    showButton();
     input.classList.add('ward-autofill')
-    userInput.classList.add('ward-autofill');
-  };
-  button.onmouseout = () => {
-    input.classList.remove('ward-autofill');
-    userInput.classList.remove('ward-autofill');
-  };
-  button.onclick = () => {
-    chrome.runtime.sendMessage(null, { command: 'autofill' }, null, response => {
-      userInput.value = response.username;
-      input.value = response.password;
-    });
-  };
+    usernameInput.classList.add('ward-autofill');
+  });
 
-  const observer = new ResizeObserver(() => positionImage());
-  observer.observe(input);
-  observer.observe(document.body);
+  button.addEventListener('mouseleave', () => {
+    hideButton();
+    input.classList.remove('ward-autofill');
+    usernameInput.classList.remove('ward-autofill');
+  });
+
+  button.addEventListener('click', () => {
+    chrome.runtime.sendMessage(null, { command: 'autofill' }, null, response => {
+      if (response.error) {
+        alert(response.error);
+      } else {
+        usernameInput.value = response.username;
+        input.value = response.password;
+      }
+    });
+  });
+
+  document.body.appendChild(button);
 }
+
+function attachPasswords(rootElement) {
+  let passwordInputs = rootElement.querySelectorAll('input[type="password"]');
+  for (let input of passwordInputs) {
+    attachPassword(input);
+  }
+}
+
+attachPasswords(document.body);
+
+const observer = new MutationObserver(mutations => {
+  for (let mutation of mutations) {
+    for (let addedNode of mutation.addedNodes) {
+      attachPasswords(addedNode);
+    }
+  }
+});
+
+observer.observe(document.body, { childList: true, subtree: true });
