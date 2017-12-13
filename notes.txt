@@ -1,0 +1,5 @@
+Manifest location:
+  Chrome: ~/Library/Application\ Support/Google/Chrome/NativeMessagingHosts/io.github.schmich.ward.json
+  Canary:
+    Had to create NativeMessagingHosts folder
+    ~/Library/Application\ Support/Google/Chrome\ Canary/NativeMessagingHosts/io.github.schmich.ward.json
