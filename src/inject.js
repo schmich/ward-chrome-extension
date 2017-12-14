@@ -23,7 +23,7 @@ function findUsernameInput(passwordInput) {
 function attachPassword(input) {
   let button = document.createElement('img');
   button.classList.add('ward-autofill-button');
-  button.src = chrome.runtime.getURL('asterisk.svg');
+  button.src = chrome.runtime.getURL('autofill.svg');
   button.title = 'Autofill with Ward';
   button.style.display = 'none';
 

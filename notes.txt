@@ -3,3 +3,4 @@ Manifest location:
   Canary:
     Had to create NativeMessagingHosts folder
     ~/Library/Application\ Support/Google/Chrome\ Canary/NativeMessagingHosts/io.github.schmich.ward.json
+Icon author: https://www.flaticon.com/free-icon/pencil_23187

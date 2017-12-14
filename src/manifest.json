@@ -33,7 +33,7 @@
     }
   ],
   "web_accessible_resources": [
-    "asterisk.svg"
+    "autofill.svg"
   ],
   "minimum_chrome_version": "64",
   "content_security_policy": "script-src 'self'; object-src 'self'"

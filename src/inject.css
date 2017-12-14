@@ -2,11 +2,7 @@
   box-sizing: border-box;
   position: absolute;
   cursor: pointer;
-  opacity: 0.5;
   z-index: 9999999;
-}
-.ward-autofill-button:hover {
-  opacity: 1;
 }
 input.ward-autofill {
   background: #dfd !important;
