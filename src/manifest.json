@@ -35,6 +35,5 @@
   "web_accessible_resources": [
     "autofill.svg"
   ],
-  "minimum_chrome_version": "64",
   "content_security_policy": "script-src 'self'; object-src 'self'"
 }

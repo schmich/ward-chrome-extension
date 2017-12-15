@@ -88,8 +88,6 @@ function attachPasswords(rootElement) {
   }
 }
 
-attachPasswords(document.body);
-
 const observer = new MutationObserver(mutations => {
   for (let mutation of mutations) {
     for (let addedNode of mutation.addedNodes) {
@@ -99,3 +97,5 @@ const observer = new MutationObserver(mutations => {
 });
 
 observer.observe(document.body, { childList: true, subtree: true });
+
+attachPasswords(document.body);
