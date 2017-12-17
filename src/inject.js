@@ -4,7 +4,19 @@ function findUsernameInput(passwordInput) {
   }
 
   const form = passwordInput.form;
-  const fieldNames = ['username', 'user', 'email', 'login', 'name'];
+  const fieldNames = [
+    'username',
+    'Username',
+    'UserName',
+    'user',
+    'User',
+    'email',
+    'Email',
+    'login',
+    'Login',
+    'name',
+    'Name'
+  ];
 
   for (let name of fieldNames) {
     let input = form.querySelector(`input[name~="${name}"]`)
@@ -81,8 +93,11 @@ function attachPassword(input) {
   document.body.appendChild(button);
 }
 
-function attachPasswords(rootElement) {
-  let passwordInputs = rootElement.querySelectorAll('input[type="password"]');
+function attachPasswords(parent) {
+  if (!parent.querySelectorAll) {
+    return;
+  }
+  let passwordInputs = parent.querySelectorAll('input[type="password"]');
   for (let input of passwordInputs) {
     attachPassword(input);
   }
